@@ -1,6 +1,7 @@
 package dev.tilegame;
 
 import dev.tilegame.display.Display;
+import dev.tilegame.gfx.Assets;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -27,11 +28,14 @@ public class Game implements Runnable
     private void init()
     {
         display = new Display(title, width, height);
+        Assets.init();
     }
+
+    int x = 0;
 
     private void tick()
     {
-
+        x += 1;
     }
 
     private void render()
@@ -43,9 +47,11 @@ public class Game implements Runnable
             return;
         }
         g = bs.getDrawGraphics();
+        //Clear Screen
+        g.clearRect(0, 0, width, height);
         //Draw Here!
 
-        g.fillRect(0, 0, width, height);
+        g.drawImage(Assets.grass, x, 10, null);
 
         //End Drawing!
         bs.show();
@@ -56,10 +62,35 @@ public class Game implements Runnable
     {
         init();
 
+        int fps = 60;
+        double timePerTick = 1000000000 / fps;
+        double delta = 0;
+        long now;
+        long lastTime = System.nanoTime();
+        long timer = 0;
+        int ticks = 0;
+
         while(running)
         {
-            tick();
-            render();
+            now = System.nanoTime();
+            delta += (now - lastTime) / timePerTick;
+            timer += now - lastTime;
+            lastTime = now;
+
+            if(delta >= 1)
+            {
+                tick();
+                render();
+                ticks++;
+                delta--;
+            }
+
+            if(timer >= 1000000000)
+            {
+                System.out.println("Ticks and Frames: " + ticks);
+                ticks = 0;
+                timer = 0;
+            }
         }
 
         stop();
