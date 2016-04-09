@@ -2,6 +2,8 @@ package dev.tilegame;
 
 import dev.tilegame.display.Display;
 import dev.tilegame.gfx.Assets;
+import dev.tilegame.states.GameState;
+import dev.tilegame.states.State;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -18,6 +20,9 @@ public class Game implements Runnable
     private BufferStrategy bs;
     private Graphics g;
 
+    //States
+    private State gameState;
+
     public Game(String title, int width, int height)
     {
         this.title = title;
@@ -29,13 +34,17 @@ public class Game implements Runnable
     {
         display = new Display(title, width, height);
         Assets.init();
-    }
 
-    int x = 0;
+        gameState = new GameState();
+        State.setState(gameState);
+    }
 
     private void tick()
     {
-        x += 1;
+        if(State.getState() != null)
+        {
+            State.getState().tick();
+        }
     }
 
     private void render()
@@ -51,7 +60,10 @@ public class Game implements Runnable
         g.clearRect(0, 0, width, height);
         //Draw Here!
 
-        g.drawImage(Assets.grass, x, 10, null);
+        if(State.getState() != null)
+        {
+            State.getState().render(g);
+        }
 
         //End Drawing!
         bs.show();
