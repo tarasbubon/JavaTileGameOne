@@ -2,8 +2,8 @@ package dev.tilegame;
 
 import dev.tilegame.display.Display;
 import dev.tilegame.gfx.Assets;
-import dev.tilegame.states.GameState;
-import dev.tilegame.states.State;
+import dev.tilegame.input.KeyManager;
+import dev.tilegame.states.*;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -22,25 +22,34 @@ public class Game implements Runnable
 
     //States
     private State gameState;
+    private State menuState;
+
+    //Input
+    private KeyManager keyManager;
 
     public Game(String title, int width, int height)
     {
         this.title = title;
         this.width = width;
         this.height = height;
+        keyManager = new KeyManager();
     }
 
     private void init()
     {
         display = new Display(title, width, height);
+        display.getFrame().addKeyListener(keyManager);
         Assets.init();
 
-        gameState = new GameState();
+        gameState = new GameState(this);
+        menuState = new MenuState(this);
         State.setState(gameState);
     }
 
     private void tick()
     {
+        keyManager.tick();
+
         if(State.getState() != null)
         {
             State.getState().tick();
@@ -106,6 +115,11 @@ public class Game implements Runnable
         }
 
         stop();
+    }
+
+    public KeyManager getKeyManager()
+    {
+        return keyManager;
     }
 
     public synchronized void start()
