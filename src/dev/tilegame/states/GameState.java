@@ -1,6 +1,6 @@
 package dev.tilegame.states;
 
-import dev.tilegame.Game;
+import dev.tilegame.Handler;
 import dev.tilegame.entities.creatures.Player;
 import dev.tilegame.worlds.World;
 
@@ -11,11 +11,12 @@ public class GameState extends State
     private Player player;
     private World world;
 
-    public GameState(Game game)
+    public GameState(Handler handler)
     {
-        super(game);
-        player = new Player(game, 100, 100);
-        world = new World(game, "res/worlds/World1.txt");
+        super(handler);
+        world = new World(handler, "res/worlds/World1.txt");
+        handler.setWorld(world);
+        player = new Player(handler, 100, 100);
     }
 
     @Override
