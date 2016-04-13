@@ -4,6 +4,7 @@ import dev.tilegame.display.Display;
 import dev.tilegame.gfx.Assets;
 import dev.tilegame.gfx.GameCamera;
 import dev.tilegame.input.KeyManager;
+import dev.tilegame.input.MouseManager;
 import dev.tilegame.states.*;
 
 import java.awt.*;
@@ -22,11 +23,12 @@ public class Game implements Runnable
     private Graphics g;
 
     //States
-    private State gameState;
-    private State menuState;
+    public State gameState;
+    public State menuState;
 
     //Input
     private KeyManager keyManager;
+    private MouseManager mouseManager;
 
     //Camera
     private GameCamera gameCamera;
@@ -40,12 +42,17 @@ public class Game implements Runnable
         this.width = width;
         this.height = height;
         keyManager = new KeyManager();
+        mouseManager = new MouseManager();
     }
 
     private void init()
     {
         display = new Display(title, width, height);
         display.getFrame().addKeyListener(keyManager);
+        display.getFrame().addMouseListener(mouseManager);
+        display.getFrame().addMouseMotionListener(mouseManager);
+        display.getCanvas().addMouseListener(mouseManager);
+        display.getCanvas().addMouseMotionListener(mouseManager);
         Assets.init();
 
         handler = new Handler(this);
@@ -53,7 +60,7 @@ public class Game implements Runnable
 
         gameState = new GameState(handler);
         menuState = new MenuState(handler);
-        State.setState(gameState);
+        State.setState(menuState);
     }
 
     private void tick()
@@ -79,8 +86,7 @@ public class Game implements Runnable
         g.clearRect(0, 0, width, height);
         //Draw Here!
 
-        if(State.getState() != null)
-        {
+        if(State.getState() != null) {
             State.getState().render(g);
         }
 
@@ -130,6 +136,11 @@ public class Game implements Runnable
     public KeyManager getKeyManager()
     {
         return keyManager;
+    }
+
+    public MouseManager getMouseManager()
+    {
+        return mouseManager;
     }
 
     public GameCamera getGameCamera()
