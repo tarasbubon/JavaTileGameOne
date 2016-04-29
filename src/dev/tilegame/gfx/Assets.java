@@ -8,15 +8,20 @@ public class Assets
 
     public static BufferedImage dirt, grass, stone, tree;
     public static BufferedImage[] player_down, player_up, player_left, player_right;
+    public static BufferedImage[] btn_start;
 
     public static void init()
     {
         SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheet.png"));
 
+        btn_start = new BufferedImage[2];
         player_down = new BufferedImage[2];
         player_up = new BufferedImage[2];
         player_left = new BufferedImage[2];
         player_right = new BufferedImage[2];
+
+        btn_start[0] = sheet.crop(width * 6, height * 4, width * 2, height);
+        btn_start[1] = sheet.crop(width * 6, height * 5, width * 2, height);
 
         player_down[0] = sheet.crop(width * 4, 0, width, height);
         player_down[1] = sheet.crop(width * 5, 0, width, height);
