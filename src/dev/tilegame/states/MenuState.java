@@ -31,6 +31,10 @@ public class MenuState extends State
     public void tick()
     {
         uiManager.tick();
+
+        //Temporary just go directly to the GameState, skip the menu state
+        handler.getMouseManager().setUiManager(null);
+        State.setState(handler.getGame().gameState);
     }
 
     @Override

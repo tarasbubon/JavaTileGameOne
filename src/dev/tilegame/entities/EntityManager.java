@@ -36,6 +36,10 @@ public class EntityManager
         for(Entity e : entities)
         {
             e.tick();
+            if(!e.isActive())
+            {
+                entities.remove(e);
+            }
         }
         entities.sort(renderSorter);
     }

@@ -3,6 +3,7 @@ package dev.tilegame.worlds;
 import dev.tilegame.Handler;
 import dev.tilegame.entities.EntityManager;
 import dev.tilegame.entities.creatures.Player;
+import dev.tilegame.entities.statics.Rock;
 import dev.tilegame.entities.statics.Tree;
 import dev.tilegame.tiles.Tile;
 import dev.tilegame.utils.Utils;
@@ -21,9 +22,10 @@ public class World
     {
         this.handler = handler;
         entityManager = new EntityManager(handler, new Player(handler, 100, 100));
+        //Temporary entity code
         entityManager.addEntity(new Tree(handler, 100, 250));
-        entityManager.addEntity(new Tree(handler, 100, 350));
-        entityManager.addEntity(new Tree(handler, 100, 450));
+        entityManager.addEntity(new Rock(handler, 100, 450));
+
         loadWorld(path);
 
         entityManager.getPlayer().setX(spawnX);
