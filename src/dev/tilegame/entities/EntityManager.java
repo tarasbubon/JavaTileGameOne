@@ -6,6 +6,7 @@ import dev.tilegame.entities.creatures.Player;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 
 public class EntityManager
 {
@@ -27,18 +28,20 @@ public class EntityManager
     {
         this.handler = handler;
         this.player = player;
-        entities = new ArrayList<Entity>();
+        entities = new ArrayList<>();
         addEntity(player);
     }
 
     public void tick()
     {
-        for(Entity e : entities)
+        Iterator<Entity> it = entities.iterator();
+        while(it.hasNext())
         {
+            Entity e = it.next();
             e.tick();
             if(!e.isActive())
             {
-                entities.remove(e);
+               it.remove();
             }
         }
         entities.sort(renderSorter);

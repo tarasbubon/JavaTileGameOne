@@ -2,6 +2,7 @@ package dev.tilegame.entities.statics;
 
 import dev.tilegame.Handler;
 import dev.tilegame.gfx.Assets;
+import dev.tilegame.items.Item;
 import dev.tilegame.tiles.Tile;
 
 import java.awt.*;
@@ -26,11 +27,11 @@ public class Tree extends StaticEntity
     @Override
     public void die()
     {
-
+        handler.getWorld().getItemManager().addItem(Item.woodItem.createNew((int)x, (int)y));
     }
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(Assets.tree, (int) (x - handler.getGameCamera().getxOffset()), (int) (y - handler.getGameCamera().getyOffset()), width, height, null);
+        g.drawImage(Assets.tree, (int) (x - handler.getGameCamera().getxOffset()), (int)(y - handler.getGameCamera().getyOffset()), width, height, null);
     }
 }

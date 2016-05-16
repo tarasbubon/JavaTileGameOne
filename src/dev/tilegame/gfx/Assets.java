@@ -6,13 +6,15 @@ public class Assets
 {
     private static final int width = 32, height = 32;
 
-    public static BufferedImage dirt, grass, stone, tree, rock;
+    public static BufferedImage dirt, grass, stone, tree, rock, wood;
     public static BufferedImage[] player_down, player_up, player_left, player_right;
     public static BufferedImage[] btn_start;
 
     public static void init()
     {
         SpriteSheet sheet = new SpriteSheet(ImageLoader.loadImage("/textures/sheet.png"));
+
+        wood = sheet.crop(width, height, width, height);
 
         btn_start = new BufferedImage[2];
         player_down = new BufferedImage[2];

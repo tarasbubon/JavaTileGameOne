@@ -2,6 +2,7 @@ package dev.tilegame.entities.statics;
 
 import dev.tilegame.Handler;
 import dev.tilegame.gfx.Assets;
+import dev.tilegame.items.Item;
 import dev.tilegame.tiles.Tile;
 
 import java.awt.*;
@@ -27,7 +28,7 @@ public class Rock extends StaticEntity
     @Override
     public void die()
     {
-
+        handler.getWorld().getItemManager().addItem(Item.rockItem.createNew((int)x, (int)y));
     }
 
     @Override
