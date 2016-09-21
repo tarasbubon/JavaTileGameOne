@@ -4,6 +4,7 @@ import dev.tilegame.Handler;
 import dev.tilegame.entities.Entity;
 import dev.tilegame.gfx.Animation;
 import dev.tilegame.gfx.Assets;
+import dev.tilegame.inventory.Inventory;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -14,6 +15,8 @@ public class Player extends Creature
     private Animation animDown, animUp, animLeft, animRight;
     //Attack timer
     private long lastAttackTimer, attackCooldown = 800, attackTimer = attackCooldown;
+    //Inventory
+    private Inventory inventory;
 
     public Player(Handler handler, float x, float y)
     {
@@ -29,6 +32,8 @@ public class Player extends Creature
         animUp = new Animation(500, Assets.player_up);
         animLeft = new Animation(500, Assets.player_left);
         animRight = new Animation(500, Assets.player_right);
+
+        inventory = new Inventory(handler);
     }
 
     @Override
@@ -45,6 +50,8 @@ public class Player extends Creature
         handler.getGameCamera().centerOnEntity(this);
         //Attack
         checkAttacks();
+        //Inventory
+        inventory.tick();
     }
 
     private void checkAttacks()
@@ -133,6 +140,7 @@ public class Player extends Creature
                     width,
                     height,
                     null);
+        inventory.render(g);
 //        g.setColor(Color.red);
 //        g.fillRect((int)(x + bounds.x - handler.getGameCamera().getxOffset()),
 //                   (int)(y + bounds.y - handler.getGameCamera().getyOffset()),
@@ -158,5 +166,14 @@ public class Player extends Creature
         {
             return animDown.getCurrentFrame();
         }
+    }
+
+    //GETTERS AND SETTERS
+    public Inventory getInventory() {
+        return inventory;
+    }
+
+    public void setInventory(Inventory inventory) {
+        this.inventory = inventory;
     }
 }

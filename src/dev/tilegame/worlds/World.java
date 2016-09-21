@@ -29,6 +29,8 @@ public class World
         //Temporary entity code
         entityManager.addEntity(new Tree(handler, 100, 250));
         entityManager.addEntity(new Rock(handler, 100, 450));
+        entityManager.addEntity(new Tree(handler, 100, 650));
+        entityManager.addEntity(new Rock(handler, 100, 850));
 
         loadWorld(path);
 
